@@ -1,4 +1,4 @@
-const TOTAL_ITEM_A = 175000; // Approx C6R5 cost
+const TOTAL_ITEM_A = 185000; // Approx C6R5 cost
 
 let currentProgressA = parseInt(localStorage.getItem('currentProgressA')) || 0;
 let progressSaved = true; 
