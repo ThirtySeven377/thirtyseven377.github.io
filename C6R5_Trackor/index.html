@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C6R5 Progress Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .status {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        .status span {
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        .progress-bar {
+            width: 80%;
+            background-color: #e0e0e0;
+            border-radius: 25px;
+            margin: 20px auto;
+            position: relative;
+            height: 30px;
+            overflow: hidden;
+        }
+        .progress-bar-inner {
+            height: 100%;
+            width: 0;
+            background-color: red;
+            transition: width .5s;
+        }
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        input, button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 21px;
+        }
+        button:hover {
+            background-color: rgb(200, 200, 200);
+        }
+        .reset {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 21px;
+            background-color: #f00;
+            color: white;
+        }
+        .reset:hover {
+            background-color: rgb(200, 0, 0);
+        }
+        .made-by {
+            margin-top: 10%;
+            font-size: 14px;
+            color: #555;
+        }
+        .made-by1 {
+            margin-top: 7.5px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>C6R5 Progress Tracker</h1>
+    <div class="progress-bar">
+        <div id="progressBar" class="progress-bar-inner"></div>
+        <div id="progressText" class="progress-text">0%</div>
+    </div>
+    <div class="status">
+        <p>You currently have: <span id="fatesStatus">Fates: 0</span> and <span id="primogemsStatus">Primogems: 0</span></p>
+    </div>
+    <div>
+        <button onclick="addProgress(60)">Add 60 * Primogems</button>
+        <button onclick="addProgress(90)">Add 90 * Primogems</button>
+        <br>
+        <button onclick="addProgress(160)">Add 1 * Fate</button>
+        <button onclick="addProgress(1600)">Add 10 * Fates</button>
+        <br>
+        <button onclick="addProgress(-160)">Remove 1 * Fate</button>
+        <button onclick="addProgress(-1600)">Remove 10 * Fates</button>
+        <br><br>
+        <div>
+            <input type="number" id="itemAInput" placeholder="Add/Remove Primogem(s)">
+            <input type="number" id="itemBInput" placeholder="Add/Remove Fate(s)">
+            <button onclick="updateProgress()">Update Progress</button>
+        </div>
+    </div>
+    <div>
+        <br><br>
+        <button onclick="saveProgress()">Save Progress</button>
+        <button class="reset" onclick="resetProgress()">Reset Progress</button>
+    </div>
+    <div class="made-by">Made by <a href="https://github.com/ThirtySeven377/thirtyseven377.github.io" target="_blank">37</a></div>
+    <div class="made-by1"><a href="https://t.me/ThirtySevenOfficialBot" target="_blank">Contact Me</a></div>
+    <script src="app.js"></script>
+</body>
+</html>
