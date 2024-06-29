@@ -55,6 +55,38 @@ function updateProgress() {
     updateProgressBar();
 }
 
+function setPrimogems() {
+    const itemAInput = document.getElementById('primogemInput').value;
+    const itemAValue = (parseInt(itemAInput) || 0);
+    if (currentProgressA !== 0) {
+        if (!confirm('Setting this value will overwrite the current progress. Do you wish to continue?')) {
+            return;
+        }
+    }
+    currentProgressA = (Math.floor(currentProgressA / 160) * 160) + itemAValue;
+    if (currentProgressA < 0) {
+        currentProgressA = 0;
+    }
+    progressSaved = false;  
+    updateProgressBar();
+}
+
+function setFates() {
+    const itemBInput = document.getElementById('fateInput').value;
+    const itemBValue = (parseInt(itemBInput) || 0) * 160;
+    if (currentProgressA !== 0) {
+        if (!confirm('Setting this value will overwrite the current progress. Do you wish to continue?')) {
+            return;
+        }
+    }
+    currentProgressA = (currentProgressA % 160) + itemBValue;
+    if (currentProgressA < 0) {
+        currentProgressA = 0;
+    }
+    progressSaved = false;  
+    updateProgressBar();
+}
+
 function saveProgress() {
     localStorage.setItem('currentProgressA', currentProgressA);
     progressSaved = true; 
