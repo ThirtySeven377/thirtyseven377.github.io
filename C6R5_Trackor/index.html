@@ -9,6 +9,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 20px;
+            overflow: hidden;
         }
         .status {
             margin: 5px 0;
@@ -88,6 +89,14 @@
         <p>You currently have: <span id="fatesStatus">Fates: 0</span> and <span id="primogemsStatus">Primogems: 0</span></p>
     </div>
     <div>
+        <div>
+            <input type="number" id="primogemInput" placeholder="Set Primogem(s) Value">
+            <button onclick="setPrimogems()">Set Primogems</button>
+            <br>
+            <input type="number" id="fateInput" placeholder="Set Fate(s) Value">
+            <button onclick="setFates()">Set Fates</button>
+        </div>
+        <br><br>
         <button onclick="addProgress(60)">Add 60 * Primogems</button>
         <button onclick="addProgress(90)">Add 90 * Primogems</button>
         <br>
@@ -96,19 +105,17 @@
         <br><br>
         <button onclick="addProgress(-160)">Remove 1 * Fate</button>
         <button onclick="addProgress(-1600)">Remove 10 * Fates</button>
-        <br><br><br>
+        <br>
         <div>
             <input type="number" id="itemAInput" placeholder="Add/Remove Primogem(s)">
             <input type="number" id="itemBInput" placeholder="Add/Remove Fate(s)">
             <button onclick="updateProgress()">Update Progress</button>
         </div>
-    </div>
-    <div>
         <br><br>
         <button onclick="saveProgress()">Save Progress</button>
         <button class="reset" onclick="resetProgress()">Reset Progress</button>
     </div>
-    <div class="made-by">Made by <a href="https://github.com/ThirtySeven377/thirtyseven377.github.io" target="_blank">37</a></div>
+    <div class="made-by">Made by <a href="https://github.com/ThirtySeven377/thirtyseven377.github.io" target="_blank">37</a> (V24.6.29.01)</div>
     <div class="made-by1"><a href="https://t.me/ThirtySevenOfficialBot" target="_blank">Contact Me</a></div>
     <script src="app.js"></script>
 </body>
