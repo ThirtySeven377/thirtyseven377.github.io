@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pixel Section Calculator - Dark Mode</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label, input, button {
+      margin: 5px;
+      font-size: 14px;
+    }
+    input, button {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      padding: 5px;
+    }
+    #timestampsContainer div {
+      margin-bottom: 5px;
+    }
+    .timestamp {
+      width: 80px;
+    }
+    #results ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    #results li {
+      margin: 3px 0;
+    }
+    button.add-btn, button.remove-btn {
+      font-size: 16px;
+      font-weight: bold;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      cursor: pointer;
+    }
+    button.remove-btn {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pixel Section Calculator</h1>
+  
+  <div>
+    <label for="totalPx">Total Pixels:</label>
+    <input type="number" id="totalPx" value="1275">
+  </div>
+  
+  <div>
+    <label for="separatorPx">Separator Size (px):</label>
+    <input type="number" id="separatorPx" value="5">
+  </div>
+  
+  <h2>Timestamps (HH:MM)</h2>
+  <div id="timestampsContainer">
+    <div><input type="text" class="timestamp" placeholder="Start (e.g., 09:00)" value="09:00"></div>
+    <div><input type="text" class="timestamp" placeholder="End (e.g., 13:00)" value="13:00"></div>
+  </div>
+  
+  <button id="addTimestamp" class="add-btn">+</button>
+  <button id="removeTimestamp" class="remove-btn">−</button>
+  <button id="calculate">Calculate</button>
+  
+  <h2>Results</h2>
+  <div id="results"></div>
+  
+  <script>
+    // Parse a time string "HH:MM" into minutes since midnight
+    function parseTime(str) {
+      const parts = str.split(':');
+      if (parts.length !== 2) return null;
+      const hours = parseInt(parts[0], 10);
+      const minutes = parseInt(parts[1], 10);
+      if (isNaN(hours) || isNaN(minutes)) return null;
+      return hours * 60 + minutes;
+    }
+    
+    // Calculate pixel sections based on timestamps and inputs
+    function calculateSections() {
+      const totalPx = parseInt(document.getElementById('totalPx').value, 10);
+      const separatorPx = parseInt(document.getElementById('separatorPx').value, 10);
+      const timestampElements = document.querySelectorAll('.timestamp');
+      const times = [];
+      
+      // Parse and validate timestamps
+      for (let i = 0; i < timestampElements.length; i++) {
+        const t = parseTime(timestampElements[i].value.trim());
+        if (t === null) {
+          alert(`Invalid time format in field ${i + 1}. Please use HH:MM.`);
+          return;
+        }
+        times.push(t);
+      }
+      
+      if (times.length < 2) {
+        alert("Please enter at least two timestamps.");
+        return;
+      }
+      
+      // Sort times in ascending order
+      times.sort((a, b) => a - b);
+      
+      const totalTime = times[times.length - 1] - times[0];
+      if (totalTime <= 0) {
+        alert("The end time must be later than the start time.");
+        return;
+      }
+      
+      // Calculate available pixels for intervals by subtracting separator pixels.
+      // Separators are between every timestamp except the first and last.
+      const numSeparators = times.length - 2;
+      const availablePx = totalPx - (numSeparators * separatorPx);
+      
+      let resultsHtml = '<ul>';
+      for (let i = 0; i < times.length - 1; i++) {
+        const interval = times[i + 1] - times[i];
+        const sectionPx = Math.round((interval / totalTime) * availablePx);
+        
+        // Format times back to HH:MM
+        const formatTime = minutes => {
+          const hrs = Math.floor(minutes / 60);
+          const mins = minutes % 60;
+          return ('0' + hrs).slice(-2) + ':' + ('0' + mins).slice(-2);
+        };
+        
+        resultsHtml += `<li>${formatTime(times[i])} – ${formatTime(times[i + 1])}: ${sectionPx}px</li>`;
+      }
+      resultsHtml += '</ul>';
+      document.getElementById('results').innerHTML = resultsHtml;
+    }
+    
+    // Add a new timestamp input field
+    document.getElementById('addTimestamp').addEventListener('click', () => {
+      const container = document.getElementById('timestampsContainer');
+      const newDiv = document.createElement('div');
+      const newInput = document.createElement('input');
+      newInput.type = 'text';
+      newInput.className = 'timestamp';
+      newInput.placeholder = 'HH:MM';
+      newDiv.appendChild(newInput);
+      container.appendChild(newDiv);
+    });
+    
+    // Remove the last timestamp input field if more than two exist
+    document.getElementById('removeTimestamp').addEventListener('click', () => {
+      const container = document.getElementById('timestampsContainer');
+      if (container.children.length > 2) {
+        container.removeChild(container.lastElementChild);
+      }
+    });
+    
+    document.getElementById('calculate').addEventListener('click', calculateSections);
+  </script>
+</body>
+</html>
